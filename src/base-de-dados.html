@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAuKKpX4xWoPpgPNhqyXarYMr0m5EELqUs",
+        authDomain: "adroit-router-239022.firebaseapp.com",
+        databaseURL: "https://adroit-router-239022.firebaseio.com",
+        projectId: "adroit-router-239022",
+        storageBucket: "adroit-router-239022.appspot.com",
+        messagingSenderId: "626152935923",
+        appId: "1:626152935923:web:d763769fc272a5c5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the database service
+    var database = firebase.database();    
+
+    function writeUserData(userId, name, email, imageUrl) {
+        database.ref('users/' + userId).set({
+            username: name,
+            email: email,
+            profile_picture: imageUrl
+        });
+    }
+
+    writeUserData(1, 'Cezar', 'cezar@gmail.com.br', 'google.com.br');
+    writeUserData(2, 'Silvio', 'silvio@gmail.com.br', 'google.com.br');
+    writeUserData(3, 'Fernando', 'fernando@gmail.com.br', 'google.com.br');
+    
+</script>
+
+<body>
+
+</body>
+
+</html>
