@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.12.1/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAuKKpX4xWoPpgPNhqyXarYMr0m5EELqUs",
+        authDomain: "adroit-router-239022.firebaseapp.com",
+        projectId: "adroit-router-239022"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // Get a reference to the database service
+    var database = firebase.firestore();
+
+    function writeUserData(userId, name, email, imageUrl) {
+        var user = {
+            username: name,
+            email: email,
+            profile_picture: imageUrl
+        };
+
+        var users = database.collection("users");
+
+        users.add(user)
+            .then(function (docRef) {
+                document.write("<br>Document written with ID: ", docRef.id);
+            })
+            .catch(function (error) {
+                document.write("<br>Error adding document: ", error);
+            });
+    }
+
+    function init() {
+        writeUserData(1, 'Cezar Gomes', 'cezar@gmail.com.br', 'google.com.br');
+        writeUserData(2, 'Silvio', 'silvio@gmail.com.br', 'google.com.br');
+        writeUserData(3, 'Fernando', 'fernando@gmail.com.br', 'google.com.br');
+    }
+
+    function listar() {
+        var users = database.collection("users");
+
+        users.get().then((querySnapshot) => {
+            
+            imprimir(querySnapshot);
+
+        });        
+    }
+
+    function imprimir(lista) {
+        document.write("<br>Lista de Usuários<br>");
+        lista.forEach((value) => {
+            document.write(value.data().email + " - " + value.data().username + " - " + value.data().profile_picture + "<br>");
+        });
+    }
+
+    function apagar() {
+        var user2 = database.ref('users/1');
+        user2.remove();
+    }
+
+    init();
+    listar();
+
+
+</script>
+
+<body>
+
+</body>
+
+</html>
