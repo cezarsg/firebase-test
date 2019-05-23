@@ -33,17 +33,43 @@
     var database = firebase.database();    
 
     function writeUserData(userId, name, email, imageUrl) {
-        database.ref('users/' + userId).set({
+        var user = {
             username: name,
             email: email,
             profile_picture: imageUrl
+        };
+        
+        database.ref('users/' + userId).set(user);
+    }
+
+    function init() {
+        writeUserData(1, 'Cezar Gomes', 'cezar@gmail.com.br', 'google.com.br');
+        writeUserData(2, 'Silvio', 'silvio@gmail.com.br', 'google.com.br');
+        writeUserData(3, 'Fernando', 'fernando@gmail.com.br', 'google.com.br');
+    }
+
+    function listar() {        
+        var lista = firebase.database().ref('users/');
+        lista.on('value', function(snapshot) {
+            imprimir(snapshot.val());
         });
     }
 
-    writeUserData(1, 'Cezar', 'cezar@gmail.com.br', 'google.com.br');
-    writeUserData(2, 'Silvio', 'silvio@gmail.com.br', 'google.com.br');
-    writeUserData(3, 'Fernando', 'fernando@gmail.com.br', 'google.com.br');
-    
+    function imprimir(lista) {
+        lista.forEach(function(value, index, array) {
+            document.write(value.email + "<br>" + value.username + "<br>" + value.profile_picture + "<br>");
+            document.write("<br>");
+        });
+    }
+
+    function apagar() {        
+        var user2 = firebase.database().ref('users/1');
+        user2.remove();        
+    }
+
+    writeUserData(2, 'Paulo', 'cezar@gmail.com.br', 'google.com.br');
+
+
 </script>
 
 <body>
